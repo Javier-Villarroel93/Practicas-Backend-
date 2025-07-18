@@ -3,172 +3,138 @@ const router = express.Router();
 const { body, param } = require('express-validator');
 
 const { 
-    mostrarProductos, 
-    crearProducto, 
-    actualizarProducto,
-    eliminarProducto,
-    actualizarStock
-} = require('../controller/producto.controller');
+    mostrarServicios, 
+    crearServicio, 
+    actualizarServicio,
+    eliminarServicio
+} = require('../controller/servicio.controller');
 
 // Middleware de autenticación (opcional)
 // const isLoggedIn = require('../lib/auth');
 
-// Validaciones para crear producto
-const validacionCrearProducto = [
-    body('nombreProducto')
+// Validaciones para crear servicio
+const validacionCrearServicio = [
+    body('nombreServicio')
         .notEmpty()
-        .withMessage('El nombre del producto es obligatorio')
+        .withMessage('El nombre del servicio es obligatorio')
         .isLength({ min: 2, max: 100 })
         .withMessage('El nombre debe tener entre 2 y 100 caracteres'),
     
-    body('descripcionProducto')
+    body('descripcionServicio')
         .notEmpty()
-        .withMessage('La descripción del producto es obligatoria')
+        .withMessage('La descripción del servicio es obligatoria')
         .isLength({ min: 10, max: 255 })
         .withMessage('La descripción debe tener entre 10 y 255 caracteres'),
     
-    body('precioProducto')
+    body('precioServicio')
         .isFloat({ min: 0.01 })
         .withMessage('El precio debe ser un número mayor a 0'),
     
-    body('stock')
-        .isInt({ min: 0 })
-        .withMessage('El stock debe ser un número entero mayor o igual a 0'),
-    
-    body('categoria')
-        .optional()
-        .isLength({ max: 50 })
-        .withMessage('La categoría no puede exceder 50 caracteres'),
-    
     // Validaciones para campos de MongoDB
-    body('descripcionLarga')
+    body('descripcionExtendida')
         .optional()
         .isLength({ max: 1000 })
-        .withMessage('La descripción larga no puede exceder 1000 caracteres'),
+        .withMessage('La descripción extendida no puede exceder 1000 caracteres'),
     
-    body('usoRecomendado')
+    body('requisitos')
+        .optional()
+        .isArray()
+        .withMessage('Los requisitos deben ser un array'),
+    
+    body('duracionMinutos')
+        .optional()
+        .isInt({ min: 5, max: 480 })
+        .withMessage('La duración debe ser entre 5 y 480 minutos'),
+    
+    body('equipoNecesario')
+        .optional()
+        .isArray()
+        .withMessage('El equipo necesario debe ser un array'),
+    
+    body('instruccionesPrevias')
         .optional()
         .isLength({ max: 500 })
-        .withMessage('El uso recomendado no puede exceder 500 caracteres'),
+        .withMessage('Las instrucciones previas no pueden exceder 500 caracteres'),
     
-    body('efectosSecundarios')
-        .optional()
-        .isArray()
-        .withMessage('Los efectos secundarios deben ser un array'),
-    
-    body('ingredientes')
-        .optional()
-        .isArray()
-        .withMessage('Los ingredientes deben ser un array'),
-    
-    body('modoAplicacion')
-        .optional()
-        .isLength({ max: 300 })
-        .withMessage('El modo de aplicación no puede exceder 300 caracteres'),
-    
-    body('precauciones')
+    body('instruccionesPosteriores')
         .optional()
         .isLength({ max: 500 })
-        .withMessage('Las precauciones no pueden exceder 500 caracteres'),
+        .withMessage('Las instrucciones posteriores no pueden exceder 500 caracteres'),
     
-    body('imagenes')
+    body('etiquetas')
         .optional()
         .isArray()
-        .withMessage('Las imágenes deben ser un array'),
+        .withMessage('Las etiquetas deben ser un array'),
     
     body('destacado')
         .optional()
         .isBoolean()
         .withMessage('Destacado debe ser verdadero o falso'),
     
-    body('stockCritico')
+    body('imagenUrl')
         .optional()
-        .isInt({ min: 0 })
-        .withMessage('El stock crítico debe ser un número entero mayor o igual a 0')
+        .isURL()
+        .withMessage('La imagen debe ser una URL válida')
 ];
 
-// Validaciones para actualizar producto
-const validacionActualizarProducto = [
-    param('idProducto')
+// Validaciones para actualizar servicio
+const validacionActualizarServicio = [
+    param('idServicio')
         .isInt({ min: 1 })
-        .withMessage('El ID del producto debe ser un número entero positivo'),
+        .withMessage('El ID del servicio debe ser un número entero positivo'),
     
-    ...validacionCrearProducto
+    ...validacionCrearServicio
 ];
 
-// Validaciones para actualizar stock
-const validacionActualizarStock = [
-    param('id')
+// Validación para eliminar servicio
+const validacionEliminarServicio = [
+    param('idServicio')
         .isInt({ min: 1 })
-        .withMessage('El ID del producto debe ser un número entero positivo'),
-    
-    body('nuevoStock')
-        .isInt({ min: 0 })
-        .withMessage('El nuevo stock debe ser un número entero mayor o igual a 0'),
-    
-    body('operacion')
-        .isIn(['suma', 'resta', 'set'])
-        .withMessage('La operación debe ser: suma, resta o set')
+        .withMessage('El ID del servicio debe ser un número entero positivo')
 ];
 
-// Validación para eliminar producto
-const validacionEliminarProducto = [
-    param('idProducto')
-        .isInt({ min: 1 })
-        .withMessage('El ID del producto debe ser un número entero positivo')
-];
+// ================ RUTAS DE SERVICIOS ================
 
-// ================ RUTAS DE PRODUCTOS ================
+// Obtener todos los servicios
+router.get('/lista', mostrarServicios);
 
-// Obtener todos los productos
-router.get('/lista', mostrarProductos);
-
-// Obtener productos destacados
+// Obtener servicios destacados
 router.get('/destacados', (req, res) => {
     // Implementar en el controlador si es necesario
-    res.json({ message: 'Endpoint para obtener productos destacados' });
+    res.json({ message: 'Endpoint para obtener servicios destacados' });
 });
 
-// Obtener productos por categoría
+// Obtener servicios por categoría/etiqueta
 router.get('/categoria/:categoria', (req, res) => {
     // Implementar en el controlador si es necesario
-    res.json({ message: 'Endpoint para obtener productos por categoría' });
+    res.json({ message: 'Endpoint para obtener servicios por categoría' });
 });
 
-// Obtener productos con stock bajo
-router.get('/stock-bajo', (req, res) => {
+// Obtener servicio por ID
+router.get('/obtener/:idServicio', (req, res) => {
     // Implementar en el controlador si es necesario
-    res.json({ message: 'Endpoint para obtener productos con stock bajo' });
+    res.json({ message: 'Endpoint para obtener servicio por ID' });
 });
 
-// Obtener producto por ID
-router.get('/obtener/:idProducto', (req, res) => {
-    // Implementar en el controlador si es necesario
-    res.json({ message: 'Endpoint para obtener producto por ID' });
-});
-
-// Buscar productos
+// Buscar servicios
 router.get('/buscar', (req, res) => {
     // Implementar en el controlador si es necesario
-    res.json({ message: 'Endpoint para buscar productos' });
+    res.json({ message: 'Endpoint para buscar servicios' });
 });
 
-// Crear nuevo producto
-router.post('/crear', validacionCrearProducto, crearProducto);
+// Crear nuevo servicio
+router.post('/crear', validacionCrearServicio, crearServicio);
 
-// Actualizar producto existente
-router.put('/actualizar/:idProducto', validacionActualizarProducto, actualizarProducto);
+// Actualizar servicio existente
+router.put('/actualizar/:idServicio', validacionActualizarServicio, actualizarServicio);
 
-// Actualizar stock de producto
-router.put('/actualizar-stock/:id', validacionActualizarStock, actualizarStock);
+// Eliminar (desactivar) servicio
+router.delete('/eliminar/:idServicio', validacionEliminarServicio, eliminarServicio);
 
-// Eliminar (desactivar) producto
-router.delete('/eliminar/:idProducto', validacionEliminarProducto, eliminarProducto);
-
-// Cambiar estado de producto
-router.put('/cambiar-estado/:idProducto', (req, res) => {
+// Cambiar estado de servicio
+router.put('/cambiar-estado/:idServicio', (req, res) => {
     // Implementar en el controlador si es necesario
-    res.json({ message: 'Endpoint para cambiar estado de producto' });
+    res.json({ message: 'Endpoint para cambiar estado de servicio' });
 });
 
 module.exports = router;

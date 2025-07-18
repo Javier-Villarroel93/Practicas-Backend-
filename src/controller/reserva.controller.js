@@ -196,7 +196,7 @@ reservaCtl.crearReserva = async (req, res) => {
 
         // Verificar que el cliente existe
         const [clienteExiste] = await sql.promise().query(
-            'SELECT idClientes FROM clientes WHERE idClientes = ? AND estadoCliente = "activo"',
+            'SELECT idClientes FROM clientes WHERE idClientes = ? AND stadoCliente = "activo"',
             [idCliente]
         );
 
