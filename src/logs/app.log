@@ -386,3 +386,9 @@ Stack: ForbiddenError: invalid csrf token
 2025-07-17 20:46:22 [INFO]: 🚀 MongoDB conectado correctamente
 2025-07-17 20:46:22 [INFO]: Conexión establecida con la base de datos
 2025-07-17 20:46:23 [INFO]: Base de Datos sincronizadas
+2025-07-17 20:49:20 [INFO]: El servidor está escuchando en el puerto 4500
+2025-07-17 20:49:20 [INFO]: Base de datos conectada
+2025-07-17 20:49:20 [INFO]: ✅ Mongoose conectado a MongoDB en: localhost
+2025-07-17 20:49:20 [INFO]: 🚀 MongoDB conectado correctamente
+2025-07-17 20:49:20 [INFO]: Conexión establecida con la base de datos
+2025-07-17 20:49:21 [INFO]: Base de Datos sincronizadas
