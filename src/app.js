@@ -253,11 +253,18 @@ app.use('/cliente', require('./router/cliente.router'));
 app.use('/auth', require('./router/auth.router'));
 app.use('/user', require('./router/user.router'));
 app.use('/rol', require('./router/rol.router'));
+app.use('/detalle-rol', require('./router/detalleRol.router')); // NUEVO
 app.use('/mascota', require('./router/mascota.router'));
 app.use('/servicio', require('./router/servicio.router'));
 app.use('/producto', require('./router/producto.router'));
 app.use('/cita', require('./router/cita.router'));
 app.use('/propietario', require('./router/propietario.router'));
+app.use('/pago', require('./router/pago.router')); // NUEVO
+app.use('/notificacion', require('./router/notificacion.router')); // NUEVO
+app.use('/auditoria', require('./router/auditoria.router')); // NUEVO
+app.use('/feedback', require('./router/feedback.router')); // NUEVO
+app.use('/promocion', require('./router/promocion.router')); // NUEVO
+app.use('/reserva', require('./router/reserva.router')); // NUEVO
 
 // Configurar variables globales
 app.use((req, res, next) => {

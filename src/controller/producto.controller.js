@@ -217,6 +217,6 @@ productoCtl.eliminarProducto = async (req, res) => {
             error: error.message
         });
     }
-};
+}; 
 
 module.exports = productoCtl;
