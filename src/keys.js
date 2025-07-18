@@ -1,6 +1,6 @@
 const MYSQLHOST = 'localhost'; 
 const MYSQLUSER = 'root';
-const MYSQLPASSWORD = '';
+const MYSQLPASSWORD = '12345';
 const MYSQLDATABASE = 'petPoket';
 const MYSQLPORT = '3306';
 const MYSQL_URI = process.env.MYSQL_URI || '';
