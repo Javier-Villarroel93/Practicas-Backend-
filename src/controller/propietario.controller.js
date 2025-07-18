@@ -1,17 +1,17 @@
 const propietarioCtl = {};
-const sql = require('../Database/dataBaseSql');
+const orm = require('../Database/dataBase.orm');
+const sql = require('../Database/dataBase.sql');
 const mongo = require('../Database/dataBaseMongose');
-const orm = require('../Database/dataBaseOrm');
 const { cifrarDatos, descifrarDatos } = require('../lib/encrypDates');
 
 // Función para descifrar de forma segura
 const descifrarSeguro = (dato) => {
-    try {
-        return dato ? descifrarDatos(dato) : '';
-    } catch (error) {
-        console.error('Error al descifrar:', error);
-        return '';
-    }
+  try {
+    return dato ? descifrarDatos(dato) : '';
+  } catch (error) {
+    console.error('Error al descifrar:', error);
+    return '';
+  }
 };
 
 // Mostrar todos los propietarios con sus mascotas

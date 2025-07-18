@@ -252,6 +252,12 @@ app.use('/pagina', require('./router/pagina.router'))
 app.use('/cliente', require('./router/cliente.router'));
 app.use('/auth', require('./router/auth.router'));
 app.use('/user', require('./router/user.router'));
+app.use('/rol', require('./router/rol.router'));
+app.use('/mascota', require('./router/mascota.router'));
+app.use('/servicio', require('./router/servicio.router'));
+app.use('/producto', require('./router/producto.router'));
+app.use('/cita', require('./router/cita.router'));
+app.use('/propietario', require('./router/propietario.router'));
 
 // Configurar variables globales
 app.use((req, res, next) => {
